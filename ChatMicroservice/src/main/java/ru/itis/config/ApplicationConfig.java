@@ -24,7 +24,7 @@ import java.util.Objects;
 import java.util.Properties;
 
 @Configuration
-@ComponentScan({"ru.itis.services", "ru.itis.repositories", "ru.itis.controllers"})
+@ComponentScan({"ru.itis"})
 @PropertySource("classpath:application.properties")
 @EnableWebMvc
 @EnableJpaRepositories(basePackages = "ru.itis.repositories")
@@ -60,6 +60,7 @@ public class ApplicationConfig {
 
         return properties;
     }
+
 
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(JpaVendorAdapter jpaVendorAdapter, DataSource dataSource, Properties hibernateProperties) {

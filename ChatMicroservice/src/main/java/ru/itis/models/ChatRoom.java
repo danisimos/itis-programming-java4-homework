@@ -14,6 +14,10 @@ import java.util.List;
 @Builder
 @Entity
 public class ChatRoom {
+    public enum State {
+        ACTIVE, DELETED
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -21,8 +25,11 @@ public class ChatRoom {
     private String name;
 
     @ManyToMany(mappedBy = "chatRooms")
-    private List<User> users;
+    private List<Account> accounts;
 
     @OneToMany(mappedBy = "chatRoom")
     private List<Message> messages;
+
+    @Enumerated(value = EnumType.STRING)
+    private State state;
 }

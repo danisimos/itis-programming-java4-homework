@@ -7,13 +7,18 @@ import lombok.NoArgsConstructor;
 import ru.itis.models.ChatRoom;
 import ru.itis.models.Message;
 
+import javax.persistence.OneToMany;
 import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UserDto {
+public class AccountDto {
+    public enum State {
+        ACTIVE, DELETED
+    };
+
     private Long id;
     private String login;
     private String email;
@@ -22,4 +27,5 @@ public class UserDto {
     private Long age;
     private List<Long> chatRoomsId;
     private List<Long> messagesId;
+    private State state;
 }

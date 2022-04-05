@@ -1,9 +1,6 @@
 package ru.itis.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -13,7 +10,12 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @Entity
-public class User {
+@ToString
+public class Account {
+    public enum State {
+        ACTIVE, DELETED
+    };
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -33,6 +35,9 @@ public class User {
         inverseJoinColumns = @JoinColumn(name = "chat_room_id", referencedColumnName = "id"))
     private List<ChatRoom> chatRooms;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "account")
     private List<Message> messages;
+
+    @Enumerated(value = EnumType.STRING)
+    private State state;
 }
