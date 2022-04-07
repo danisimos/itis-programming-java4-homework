@@ -7,8 +7,8 @@ Content-Type: application/json
 
 {
   "login": "newlog",
-  "email": "newuser@mail.com",
-  "firstName": "user",
+  "email": "newusermail.com",
+  "firstName": "jnkjn",
   "lastName": "userov",
   "age": 18
 }
@@ -45,7 +45,7 @@ Content-Type: application/json
 
 ###
 
-POST http://localhost:8080/chatRooms/1/addAccount/4
+POST http://localhost:8080/chatRooms/1/addAccount/49
 
 ###
 
@@ -57,7 +57,7 @@ GET http://localhost:8080/chatRooms/1/messages
 
 ###
 
-POST http://localhost:8080/chatRooms/1/messages
+POST http://localhost:8080/chatRooms/17/messages
 Content-Type: application/json
 
 {
@@ -67,7 +67,7 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:8080/accounts/4/messages
+GET http://localhost:8080/accounts/477/messages
 
 ###
 

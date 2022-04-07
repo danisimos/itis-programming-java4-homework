@@ -6,6 +6,7 @@ import ru.itis.dto.MessageDto;
 import ru.itis.dto.mappers.MessageMapper;
 import ru.itis.exceptions.AccountNotFoundException;
 import ru.itis.exceptions.ChatRoomNotFoundException;
+import ru.itis.exceptions.ExceptionEntity;
 import ru.itis.exceptions.MessageNotFoundException;
 import ru.itis.models.Account;
 import ru.itis.models.ChatRoom;
@@ -34,8 +35,10 @@ public class MessagesServiceImpl implements MessagesService {
     public MessageDto addMessageToChatRoom(Long chatRoomId, MessageDto messageDto) {
         Message message = messageMapper.toMessage(messageDto);
 
-        Account account = accountRepository.findById(messageDto.getAccountId()).orElseThrow(AccountNotFoundException::new);
-        ChatRoom chatRoom = chatRoomsRepository.findById(chatRoomId).orElseThrow(ChatRoomNotFoundException::new);
+        Account account = accountRepository.findById(messageDto.getAccountId()).orElseThrow(
+                () -> new AccountNotFoundException(ExceptionEntity.ACCOUNT_NOT_DOUND));
+        ChatRoom chatRoom = chatRoomsRepository.findById(chatRoomId).orElseThrow(
+                () -> new ChatRoomNotFoundException(ExceptionEntity.CHAT_ROOM_NOT_FOUND));
 
         message.setAccount(account);
         message.setState(Message.State.PUBLISHED);
@@ -52,7 +55,8 @@ public class MessagesServiceImpl implements MessagesService {
 
     @Override
     public MessageDto deleteMessageFromChatRoom(Long chatRoomId, Long messageId) {
-        Message message = messagesRepository.findById(messageId).orElseThrow(MessageNotFoundException::new);
+        Message message = messagesRepository.findById(messageId).orElseThrow(
+                () -> new MessageNotFoundException(ExceptionEntity.MESSAGE_NOT_FOUND));
 
         message.setState(Message.State.DELETED);
 

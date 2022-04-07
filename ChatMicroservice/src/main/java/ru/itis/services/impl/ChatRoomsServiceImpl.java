@@ -6,6 +6,7 @@ import ru.itis.dto.ChatRoomDto;
 import ru.itis.dto.mappers.ChatRoomMapper;
 import ru.itis.exceptions.AccountNotFoundException;
 import ru.itis.exceptions.ChatRoomNotFoundException;
+import ru.itis.exceptions.ExceptionEntity;
 import ru.itis.models.Account;
 import ru.itis.models.ChatRoom;
 import ru.itis.repositories.AccountsRepository;
@@ -36,7 +37,8 @@ public class ChatRoomsServiceImpl implements ChatRoomsService {
 
     @Override
     public ChatRoomDto updateChatRoom(Long chatRoomId, ChatRoomDto chatRoomDto) {
-        ChatRoom chatRoom = chatRoomsRepository.findById(chatRoomId).orElseThrow(ChatRoomNotFoundException::new);
+        ChatRoom chatRoom = chatRoomsRepository.findById(chatRoomId).orElseThrow(
+                () -> new ChatRoomNotFoundException(ExceptionEntity.CHAT_ROOM_NOT_FOUND));
 
         chatRoomMapper.updateChatRoomFromDto(chatRoomDto, chatRoom);
 
@@ -45,7 +47,8 @@ public class ChatRoomsServiceImpl implements ChatRoomsService {
 
     @Override
     public ChatRoomDto deleteChatRoom(Long chatRoomId) {
-        ChatRoom chatRoom = chatRoomsRepository.findById(chatRoomId).orElseThrow(ChatRoomNotFoundException::new);
+        ChatRoom chatRoom = chatRoomsRepository.findById(chatRoomId).orElseThrow(
+                () -> new ChatRoomNotFoundException(ExceptionEntity.CHAT_ROOM_NOT_FOUND));
 
         chatRoom.setState(ChatRoom.State.DELETED);
 
@@ -54,15 +57,18 @@ public class ChatRoomsServiceImpl implements ChatRoomsService {
 
     @Override
     public List<ChatRoomDto> getChatRoomsByAccount(Long accountId) {
-        Account account = accountsRepository.findById(accountId).orElseThrow(AccountNotFoundException::new);
+        Account account = accountsRepository.findById(accountId).orElseThrow(
+                () -> new AccountNotFoundException(ExceptionEntity.ACCOUNT_NOT_DOUND));
 
         return chatRoomMapper.toChatRoomDtoList(chatRoomsRepository.findByAccountsContains(account));
     }
 
     @Override
     public ChatRoomDto addAccountToChatRoom(Long chatRoomId, Long accountId) {
-        Account account = accountsRepository.findById(accountId).orElseThrow(AccountNotFoundException::new);
-        ChatRoom chatRoom = chatRoomsRepository.findById(chatRoomId).orElseThrow(ChatRoomNotFoundException::new);
+        Account account = accountsRepository.findById(accountId).orElseThrow(
+                () -> new AccountNotFoundException(ExceptionEntity.ACCOUNT_NOT_DOUND));
+        ChatRoom chatRoom = chatRoomsRepository.findById(chatRoomId).orElseThrow(
+                () -> new ChatRoomNotFoundException(ExceptionEntity.CHAT_ROOM_NOT_FOUND));
 
         chatRoom.getAccounts().add(account);
         account.getChatRooms().add(chatRoom);
@@ -74,12 +80,13 @@ public class ChatRoomsServiceImpl implements ChatRoomsService {
 
     @Override
     public ChatRoomDto deleteAccountFromChatRoom(Long chatRoomId, Long accountId) {
-        Account account = accountsRepository.findById(accountId).orElseThrow(AccountNotFoundException::new);
+        Account account = accountsRepository.findById(accountId).orElseThrow(
+                () -> new AccountNotFoundException(ExceptionEntity.ACCOUNT_NOT_DOUND));
 
         ChatRoom chatRoom = account.getChatRooms().stream()
                 .filter(chatRoom1 -> chatRoom1.getId() == chatRoomId)
                 .findAny()
-                .orElseThrow(ChatRoomNotFoundException::new);
+                .orElseThrow(() -> new ChatRoomNotFoundException(ExceptionEntity.CHAT_ROOM_NOT_FOUND));
 
         account.getChatRooms().remove(chatRoom);
         accountsRepository.save(account);

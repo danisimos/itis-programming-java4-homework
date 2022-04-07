@@ -9,6 +9,8 @@ import ru.itis.models.ChatRoom;
 
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Data
 @AllArgsConstructor
@@ -19,7 +21,9 @@ public class MessageDto {
         PUBLISHED, DELETED
     };
 
+    @NotNull(message = "MESSAGE_ID_NULL")
     private Long id;
+    @NotBlank(message = "MESSAGE_BODY_EMPTY")
     private String body;
     private Long chatRoomId;
     private Long accountId;
