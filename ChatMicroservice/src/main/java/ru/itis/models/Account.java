@@ -13,7 +13,11 @@ import java.util.List;
 @ToString
 public class Account {
     public enum State {
-        ACTIVE, DELETED
+        ACTIVE, DELETED, BANNED, CONFIRMED
+    };
+
+    public enum Role {
+        USER, ADMIN
     };
 
     @Id
@@ -22,6 +26,7 @@ public class Account {
 
     private String login;
     private String email;
+    private String password;
 
     @Column(name = "first_name")
     private String firstName;
@@ -40,4 +45,7 @@ public class Account {
 
     @Enumerated(value = EnumType.STRING)
     private State state;
+
+    @Enumerated(value = EnumType.STRING)
+    private Role role;
 }

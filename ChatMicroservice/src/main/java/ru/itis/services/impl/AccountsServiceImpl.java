@@ -39,6 +39,7 @@ public class AccountsServiceImpl implements AccountsService {
 
         Account account = accountMapper.toAccount(accountDto);
         account.setState(Account.State.ACTIVE);
+        account.setRole(Account.Role.USER);
 
         return accountMapper.toAccountDto(accountsRepository.save(account));
     }

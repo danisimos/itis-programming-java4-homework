@@ -17,7 +17,11 @@ import java.util.List;
 @Builder
 public class AccountDto {
     public enum State {
-        ACTIVE, DELETED
+        ACTIVE, DELETED, BANNED, CONFIRMED
+    };
+
+    public enum Role {
+        USER, ADMIN
     };
 
     @NotNull(message = "ACCOUNT_ID_NULL")
@@ -36,4 +40,5 @@ public class AccountDto {
     private List<Long> chatRoomsId;
     private List<Long> messagesId;
     private State state;
+    private Role role;
 }

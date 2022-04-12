@@ -1,4 +1,5 @@
 GET http://localhost:8080/accounts
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYW5AZ21haWwuY29tIiwiZXhwIjoxNjQ5NzgwMTYwfQ.mhYZes8cVqKXWUFlQc-YldAhC1GDW6Z43hFHG82XKyU
 
 ###
 
@@ -72,3 +73,19 @@ GET http://localhost:8080/accounts/477/messages
 ###
 
 DELETE http://localhost:8080/chatRooms/1/messages?messageId=1
+
+###
+
+GET http://localhost:8080/api/chatmicroservice/testingSecurityAuthority/
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYW5AZ21haWwuY29tIiwiZXhwIjoxNjQ5NzgwMTYwfQ.mhYZes8cVqKXWUFlQc-YldAhC1GDW6Z43hFHG82XKyU
+
+###
+
+POST http://localhost:8080/api/chatmicroservice/login/
+Content-Type: application/json
+
+{
+  "email": "man@gmail.com",
+  "password": "dada"
+}
+
