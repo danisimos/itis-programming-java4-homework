@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.itis.models.Account;
 import ru.itis.models.ChatRoom;
+import ru.itis.validation.annotations.NotContainsWords;
 
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -24,6 +25,7 @@ public class MessageDto {
     @NotNull(message = "MESSAGE_ID_NULL")
     private Long id;
     @NotBlank(message = "MESSAGE_BODY_EMPTY")
+    @NotContainsWords(words = {"example1", "example2"}, message = "text cannot contains forbidden words: {words}")
     private String body;
     private Long chatRoomId;
     private Long accountId;
